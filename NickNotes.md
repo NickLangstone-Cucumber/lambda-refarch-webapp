@@ -1,0 +1,2 @@
+export AWS_DEFAULT_REGION=ap-southeast-2
+export STACK_NAME=Nicks_SpringSheepTest1
