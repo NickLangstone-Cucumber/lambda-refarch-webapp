@@ -27,6 +27,5 @@ Setting default arguments for 'sam deploy'
         SAM configuration file [samconfig.toml]:
         SAM configuration environment [default]:
 
-                Using defined S3 bucket: aws-sam-cli-managed-default-samclisourcebucket-1s49qj73tr81w
-
+NOTE: Need to clear the samconfig.yaml   file if the bucket is deleted
 
