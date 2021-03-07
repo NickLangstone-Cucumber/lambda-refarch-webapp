@@ -4,6 +4,9 @@ set -x
 [ -z "$AWS_DEFAULT_REGION" ] && echo "Please specify AWS_DEFAULT_REGION environment variable" && exit 1;
 
 sam build --use-container
+
+echo "sam build --use-container  -- finished"
+echo "about to deploy "
 sam deploy --guided --stack-name $STACK_NAME
 
 export AWS_COGNITO_REGION=$AWS_DEFAULT_REGION
@@ -12,6 +15,19 @@ export API_BASE_URL=`aws cloudformation describe-stacks --stack-name $STACK_NAME
 export STAGE_NAME_PARAM=`aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Parameters[?ParameterKey=='StageNameParam'].ParameterValue" --output text`
 export COGNITO_HOSTED_DOMAIN=`aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?OutputKey=='CognitoDomainName'].OutputValue" --output text`
 export REDIRECT_URL=`aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?OutputKey=='AmplifyURL'].OutputValue" --output text`
+
+echo AWS_COGNITO_REGION   $AWS_COGNITO_REGION
+echo AWS_USER_POOLS_WEB_CLIENT_ID  $AWS_USER_POOLS_WEB_CLIENT_ID
+echo API_BASE_URL   $API_BASE_URL
+echo STAGE_NAME_PARAM   $STAGE_NAME_PARAM
+echo COGNITO_HOSTED_DOMAIN   $COGNITO_HOSTED_DOMAIN
+echo REDIRECT_URL   $REDIRECT_URL
+
+
+echo  " setting configuration file values for web app"
+
+
+
 
 cp www/src/config.default.js www/src/config.js
 if [[ "$OSTYPE" == "darwin"* ]]; then
